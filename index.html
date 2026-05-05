@@ -17,173 +17,40 @@
       --radius: 14px;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.5;
-    }
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 24px 16px 56px;
-    }
-    .header {
-      margin-bottom: 24px;
-    }
-    .eyebrow {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    h1 {
-      margin: 0 0 10px;
-      font-size: 32px;
-      line-height: 1.15;
-    }
-    .intro {
-      max-width: 72ch;
-      color: var(--muted);
-      margin-bottom: 0;
-    }
-    .layout {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 24px;
-    }
-    .panel {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-    h2 {
-      margin: 0 0 14px;
-      font-size: 20px;
-    }
-    .ranking-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: grid;
-      gap: 10px;
-    }
-    .ranking-item {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: #fcfcfa;
-      display: grid;
-      grid-template-columns: 28px 1fr auto;
-      gap: 10px;
-      align-items: start;
-    }
+    body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); line-height: 1.5; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 56px; }
+    .header { margin-bottom: 24px; }
+    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
+    h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.15; }
+    .intro { max-width: 72ch; color: var(--muted); margin-bottom: 0; }
+    .layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; }
+    .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+    h2 { margin: 0 0 14px; font-size: 20px; }
+    .ranking-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+    .ranking-item { border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; background: #fcfcfa; display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; }
     .ranking-item strong { display: block; }
     .ranking-item small { color: var(--muted); }
     .score { font-variant-numeric: tabular-nums; }
-    .section {
-      padding-bottom: 24px;
-      margin-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-    .section:last-of-type {
-      border-bottom: 0;
-      margin-bottom: 0;
-      padding-bottom: 0;
-    }
+    .section { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .section:last-of-type { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
     .field { margin-bottom: 18px; }
-    label, .legend {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .help {
-      margin-top: 6px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-    input[type="text"],
-    input[type="email"],
-    textarea,
-    select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 14px;
-      font: inherit;
-      background: #fff;
-    }
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-    .choice-list,
-    .checkbox-grid {
-      display: grid;
-      gap: 10px;
-    }
-    .checkbox-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .choice,
-    .check {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: #fcfcfa;
-    }
+    label, .legend { display: block; font-weight: 700; margin-bottom: 8px; }
+    .help { margin-top: 6px; color: var(--muted); font-size: 14px; }
+    input[type="text"], input[type="email"], textarea, select { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font: inherit; background: #fff; }
+    textarea { min-height: 120px; resize: vertical; }
+    .choice-list, .checkbox-grid { display: grid; gap: 10px; }
+    .checkbox-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .choice, .check { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #fcfcfa; }
     .hidden { display: none; }
-    .actions {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      align-items: center;
-      margin-top: 4px;
-    }
-    button {
-      border: 0;
-      border-radius: 999px;
-      padding: 12px 18px;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-      min-height: 44px;
-    }
-    .primary {
-      background: var(--accent);
-      color: white;
-    }
+    .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
+    button { border: 0; border-radius: 999px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer; min-height: 44px; }
+    .primary { background: var(--accent); color: white; }
     .primary:hover { background: var(--accent-dark); }
-    .secondary {
-      background: var(--accent-soft);
-      color: var(--accent-dark);
-    }
-    .status {
-      margin-top: 16px;
-      border-radius: 12px;
-      padding: 14px;
-      border: 1px solid var(--border);
-      background: #faf9f7;
-      display: none;
-      white-space: pre-wrap;
-    }
+    .secondary { background: var(--accent-soft); color: var(--accent-dark); }
+    .status { margin-top: 16px; border-radius: 12px; padding: 14px; border: 1px solid var(--border); background: #faf9f7; display: none; white-space: pre-wrap; }
     .status.show { display: block; }
-    .code-note {
-      margin-top: 22px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-    @media (max-width: 900px) {
-      .layout { grid-template-columns: 1fr; }
-      .checkbox-grid { grid-template-columns: 1fr; }
-    }
+    .code-note { margin-top: 22px; font-size: 14px; color: var(--muted); }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .checkbox-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -197,28 +64,7 @@
     <div class="layout">
       <aside class="panel">
         <h2>Posted rankings</h2>
-        <ol class="ranking-list">
-          <li class="ranking-item"><span>1</span><div><strong>Carleton College</strong><small>NC1</small></div><span class="score">2607.1</span></li>
-          <li class="ranking-item"><span>2</span><div><strong>British Columbia</strong><small>NW1</small></div><span class="score">2490.0</span></li>
-          <li class="ranking-item"><span>3</span><div><strong>California-Santa Cruz</strong><small>SW1</small></div><span class="score">2363.5</span></li>
-          <li class="ranking-item"><span>4</span><div><strong>Stanford</strong><small>SW2</small></div><span class="score">2329.2</span></li>
-          <li class="ranking-item"><span>5</span><div><strong>Washington</strong><small>NW2</small></div><span class="score">2226.1</span></li>
-          <li class="ranking-item"><span>6</span><div><strong>Tufts</strong><small>NE1</small></div><span class="score">2195.2</span></li>
-          <li class="ranking-item"><span>7</span><div><strong>North Carolina</strong><small>AC1</small></div><span class="score">2192.8</span></li>
-          <li class="ranking-item"><span>8</span><div><strong>Colorado</strong><small>SC1</small></div><span class="score">2072.1</span></li>
-          <li class="ranking-item"><span>9</span><div><strong>Pennsylvania</strong><small>OV1</small></div><span class="score">2006.9</span></li>
-          <li class="ranking-item"><span>10</span><div><strong>Oregon</strong><small>NW3</small></div><span class="score">1979.8</span></li>
-          <li class="ranking-item"><span>11</span><div><strong>Western Washington</strong><small>NW4</small></div><span class="score">1952.0</span></li>
-          <li class="ranking-item"><span>12</span><div><strong>UCLA</strong><small>SW3</small></div><span class="score">1921.5</span></li>
-          <li class="ranking-item"><span>13</span><div><strong>California-San Diego</strong><small>SW5</small></div><span class="score">1917.5</span></li>
-          <li class="ranking-item"><span>14</span><div><strong>Cal Poly-SLO</strong><small>SW4</small></div><span class="score">1878.2</span></li>
-          <li class="ranking-item"><span>15</span><div><strong>Victoria</strong><small>NW5</small></div><span class="score">1869.0</span></li>
-          <li class="ranking-item"><span>16</span><div><strong>Vermont</strong><small>NE2</small></div><span class="score">1790.2</span></li>
-          <li class="ranking-item"><span>17</span><div><strong>Georgia</strong><small>SE1</small></div><span class="score">1733.1</span></li>
-          <li class="ranking-item"><span>18</span><div><strong>Michigan</strong><small>GL1</small></div><span class="score">1636.0</span></li>
-          <li class="ranking-item"><span>19</span><div><strong>Toronto</strong><small>ME1</small></div><span class="score">1581.8</span></li>
-          <li class="ranking-item"><span>20</span><div><strong>Vermont B</strong><small>NE3</small></div><span class="score">1437.1</span></li>
-        </ol>
+        <ol class="ranking-list" id="rankingList"></ol>
       </aside>
 
       <main class="panel">
@@ -229,26 +75,6 @@
               <label for="team_name">Team name</label>
               <select id="team_name" name="team_name" required>
                 <option value="">Select your team</option>
-                <option>Carleton College</option>
-                <option>British Columbia</option>
-                <option>California-Santa Cruz</option>
-                <option>Stanford</option>
-                <option>Washington</option>
-                <option>Tufts</option>
-                <option>North Carolina</option>
-                <option>Colorado</option>
-                <option>Pennsylvania</option>
-                <option>Oregon</option>
-                <option>Western Washington</option>
-                <option>UCLA</option>
-                <option>California-San Diego</option>
-                <option>Cal Poly-SLO</option>
-                <option>Victoria</option>
-                <option>Vermont</option>
-                <option>Georgia</option>
-                <option>Michigan</option>
-                <option>Toronto</option>
-                <option>Vermont B</option>
               </select>
             </div>
             <div class="field">
@@ -309,15 +135,34 @@
           </div>
 
           <div id="status" class="status"></div>
-          <p class="code-note">Replace <strong>PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE</strong> in the code before going live.</p>
+          <p class="code-note">Tomorrow, only update the <strong>RANKINGS_DATA</strong> block near the top of the script. Replace <strong>PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE</strong> before going live.</p>
         </form>
       </main>
     </div>
   </div>
 
   <script>
-    const teams = [
-      'Carleton College','British Columbia','California-Santa Cruz','Stanford','Washington','Tufts','North Carolina','Colorado','Pennsylvania','Oregon','Western Washington','UCLA','California-San Diego','Cal Poly-SLO','Victoria','Vermont','Georgia','Michigan','Toronto','Vermont B'
+    const RANKINGS_DATA = [
+      { rank: 1, team: 'Carleton College', region: 'NC1', pr: '2607.1' },
+      { rank: 2, team: 'British Columbia', region: 'NW1', pr: '2490.0' },
+      { rank: 3, team: 'California-Santa Cruz', region: 'SW1', pr: '2363.5' },
+      { rank: 4, team: 'Stanford', region: 'SW2', pr: '2329.2' },
+      { rank: 5, team: 'Washington', region: 'NW2', pr: '2226.1' },
+      { rank: 6, team: 'Tufts', region: 'NE1', pr: '2195.2' },
+      { rank: 7, team: 'North Carolina', region: 'AC1', pr: '2192.8' },
+      { rank: 8, team: 'Colorado', region: 'SC1', pr: '2072.1' },
+      { rank: 9, team: 'Pennsylvania', region: 'OV1', pr: '2006.9' },
+      { rank: 10, team: 'Oregon', region: 'NW3', pr: '1979.8' },
+      { rank: 11, team: 'Western Washington', region: 'NW4', pr: '1952.0' },
+      { rank: 12, team: 'UCLA', region: 'SW3', pr: '1921.5' },
+      { rank: 13, team: 'California-San Diego', region: 'SW5', pr: '1917.5' },
+      { rank: 14, team: 'Cal Poly-SLO', region: 'SW4', pr: '1878.2' },
+      { rank: 15, team: 'Victoria', region: 'NW5', pr: '1869.0' },
+      { rank: 16, team: 'Vermont', region: 'NE2', pr: '1790.2' },
+      { rank: 17, team: 'Georgia', region: 'SE1', pr: '1733.1' },
+      { rank: 18, team: 'Michigan', region: 'GL1', pr: '1636.0' },
+      { rank: 19, team: 'Toronto', region: 'ME1', pr: '1581.8' },
+      { rank: 20, team: 'Vermont B', region: 'NE3', pr: '1437.1' }
     ];
 
     const APPS_SCRIPT_URL = 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
@@ -327,9 +172,30 @@
     const justification = document.getElementById('justification');
     const statusBox = document.getElementById('status');
 
+    function teamNames() {
+      return RANKINGS_DATA.map(item => item.team);
+    }
+
+    function renderRankings() {
+      const rankingList = document.getElementById('rankingList');
+      rankingList.innerHTML = RANKINGS_DATA.map(item => `
+        <li class="ranking-item">
+          <span>${item.rank}</span>
+          <div><strong>${item.team}</strong><small>${item.region}</small></div>
+          <span class="score">${item.pr}</span>
+        </li>
+      `).join('');
+    }
+
+    function renderTeamDropdown() {
+      const select = document.getElementById('team_name');
+      const options = teamNames().map(team => `<option>${team}</option>`).join('');
+      select.insertAdjacentHTML('beforeend', options);
+    }
+
     function renderCheckboxes(targetId, fieldName) {
       const container = document.getElementById(targetId);
-      container.innerHTML = teams.map(team => `
+      container.innerHTML = teamNames().map(team => `
         <label class="check">
           <input type="checkbox" name="${fieldName}" value="${team}">
           <span>${team}</span>
@@ -337,6 +203,8 @@
       `).join('');
     }
 
+    renderRankings();
+    renderTeamDropdown();
     renderCheckboxes('tooHighGrid', 'too_high');
     renderCheckboxes('tooLowGrid', 'too_low');
 
