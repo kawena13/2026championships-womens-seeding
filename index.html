@@ -191,9 +191,11 @@
       </main>
     </div>
   </div>
+    ];
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVoO0cKLaacCsv6FvDT2tSBukSmXkerWUwtK5cVyGmGONPmKGCjiUvUZAMQ332guzfcA/exec';
 
-  <script>
-    const RANKINGS_DATA = [
+      const RANKINGS_DATA = [
       { rank: 1, team: 'Carleton College', region: 'NC1', pr: '2607.1' },
       { rank: 2, team: 'British Columbia', region: 'NW1', pr: '2490.0' },
       { rank: 3, team: 'California-Santa Cruz', region: 'SW1', pr: '2363.5' },
@@ -214,133 +216,98 @@
       { rank: 18, team: 'Michigan', region: 'GL1', pr: '1636.0' },
       { rank: 19, team: 'Toronto', region: 'ME1', pr: '1581.8' },
       { rank: 20, team: 'Vermont B', region: 'NE3', pr: '1437.1' }
-    ];
 
-    const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwVoO0cKLaacCsv6FvDT2tSBukSmXkerWUwtK5cVyGmGONPmKGCjiUvUZAMQ332guzfcA/exec;
-    const form = document.getElementById('reviewForm');
-    const detailsSection = document.getElementById('detailsSection');
-    const recommendedChanges = document.getElementById('recommended_changes');
-    const justification = document.getElementById('justification');
-    const statusBox = document.getElementById('status');
-
-    function teamNames() {
-      return RANKINGS_DATA.map(item => item.team);
-    }
-
-    function renderRankings() {
-      const rankingList = document.getElementById('rankingList');
-      rankingList.innerHTML = RANKINGS_DATA.map(item => `
-        <li class="ranking-item">
-          <span>${item.rank}</span>
-          <div><strong>${item.team}</strong><small>${item.region}</small></div>
-          <span class="score">${item.pr}</span>
-        </li>
-      `).join('');
-    }
-
-    function renderTeamDropdown() {
-      const select = document.getElementById('team_name');
-      const options = teamNames().map(team => `<option>${team}</option>`).join('');
-      select.insertAdjacentHTML('beforeend', options);
-    }
-
-    function renderCheckboxes(targetId, fieldName) {
-      const container = document.getElementById(targetId);
-      container.innerHTML = teamNames().map(team => `
-        <label class="check">
-          <input type="checkbox" name="${fieldName}" value="${team}">
-          <span>${team}</span>
-        </label>
-      `).join('');
-    }
-
-    renderRankings();
-    renderTeamDropdown();
-    renderCheckboxes('tooHighGrid', 'too_high');
-    renderCheckboxes('tooLowGrid', 'too_low');
-
-    function updateDetailsVisibility() {
-      const approval = form.querySelector('input[name="approval_status"]:checked')?.value;
-      const show = approval === 'Yes, with minor notes' || approval === 'No';
-      detailsSection.classList.toggle('hidden', !show);
-      recommendedChanges.required = show;
-      justification.required = show;
-    }
-
-    function limitChecks(fieldName, limit) {
-      const checked = [...document.querySelectorAll(`input[name="${fieldName}"]:checked`)];
-      if (checked.length > limit) {
-        checked[checked.length - 1].checked = false;
-        setStatus(`Please select no more than ${limit} teams for ${fieldName.replace('_', ' ')}.`, true);
-      }
-    }
-
-    form.addEventListener('change', (event) => {
-      if (event.target.name === 'approval_status') updateDetailsVisibility();
-      if (event.target.name === 'too_high') limitChecks('too_high', 5);
-      if (event.target.name === 'too_low') limitChecks('too_low', 5);
+  // Clear any pre-selected radio buttons on page load
+  window.addEventListener('load', function() {
+    document.querySelectorAll('input[name="approval"]').forEach(function(r) {
+      r.checked = false;
     });
+  });
 
-    function getValues(name) {
-      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
-    }
-
-    function buildPayload() {
-      const data = new FormData(form);
-      return {
-        submitted_at: new Date().toISOString(),
-        team_name: data.get('team_name') || '',
-        respondent_name: data.get('respondent_name') || '',
-        email: data.get('email') || '',
-        approval_status: data.get('approval_status') || '',
-        too_high: getValues('too_high').join(', '),
-        too_low: getValues('too_low').join(', '),
-        recommended_changes: data.get('recommended_changes') || '',
-        justification: data.get('justification') || '',
-        additional_comments: data.get('additional_comments') || ''
-      };
-    }
-
-    function setStatus(message, isError = false) {
-      statusBox.textContent = message;
-      statusBox.classList.add('show');
-      statusBox.style.color = isError ? '#a12c7b' : '#222';
-    }
-
-    document.getElementById('previewButton').addEventListener('click', () => {
-      setStatus(JSON.stringify(buildPayload(), null, 2), false);
-    });
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      updateDetailsVisibility();
-      if (!form.reportValidity()) return;
-
-      if (APPS_SCRIPT_URL === 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        setStatus('Add your Google Apps Script URL in the code before using live submission.', true);
-        return;
+  // Show/hide feedback section based on approval selection
+  document.querySelectorAll('input[name="approval"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      var feedbackSection = document.getElementById('feedback-section');
+      var reasoningField = document.getElementById('reasoning');
+      if (this.value === 'Yes, with minor notes' || this.value === 'No') {
+        feedbackSection.style.display = 'block';
+        if (reasoningField) reasoningField.required = true;
+      } else {
+        feedbackSection.style.display = 'none';
+        if (reasoningField) reasoningField.required = false;
       }
+    });
+  });
 
-      try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(buildPayload())
-        });
-        const result = await response.json();
-        if (result.status === 'success') {
-          form.reset();
-          detailsSection.classList.add('hidden');
-          recommendedChanges.required = false;
-          justification.required = false;
-          setStatus('Thanks — your response was submitted successfully.');
+  // Form submission
+  document.getElementById('seeding-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var teamName   = document.getElementById('teamName').value.trim();
+    var respondent = document.getElementById('respondent').value.trim();
+    var email      = document.getElementById('email').value.trim();
+    var approval   = document.querySelector('input[name="approval"]:checked');
+
+    if (!teamName || !respondent || !email || !approval) {
+      showMessage('Please complete all required fields before submitting.', 'error');
+      return;
+    }
+
+    var tooHighBoxes = document.querySelectorAll('input[name="tooHigh"]:checked');
+    var tooHigh = [];
+    tooHighBoxes.forEach(function(cb) { tooHigh.push(cb.value); });
+
+    var tooLowBoxes = document.querySelectorAll('input[name="tooLow"]:checked');
+    var tooLow = [];
+    tooLowBoxes.forEach(function(cb) { tooLow.push(cb.value); });
+
+    var changesEl   = document.getElementById('changes');
+    var reasoningEl = document.getElementById('reasoning');
+    var commentsEl  = document.getElementById('comments');
+
+    var changes   = changesEl   ? changesEl.value.trim()   : '';
+    var reasoning = reasoningEl ? reasoningEl.value.trim() : '';
+    var comments  = commentsEl  ? commentsEl.value.trim()  : '';
+
+    var btn = document.getElementById('submit-btn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Submitting...'; }
+
+    var formData = new FormData();
+    formData.append('teamName',   teamName);
+    formData.append('respondent', respondent);
+    formData.append('email',      email);
+    formData.append('approval',   approval.value);
+    formData.append('tooHigh',    tooHigh.join(', '));
+    formData.append('tooLow',     tooLow.join(', '));
+    formData.append('changes',    changes);
+    formData.append('reasoning',  reasoning);
+    formData.append('comments',   comments);
+
+    fetch(SCRIPT_URL, { method: 'POST', body: formData })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data.status === 'success') {
+          showMessage('Your response has been recorded. Thank you!', 'success');
+          document.getElementById('seeding-form').reset();
+          document.getElementById('feedback-section').style.display = 'none';
         } else {
-          setStatus(result.message || 'Submission failed.', true);
+          showMessage('Something went wrong. Please try again.', 'error');
+          if (btn) { btn.disabled = false; btn.textContent = 'Submit review'; }
         }
-      } catch (error) {
-        setStatus(`Submission error: ${error.message}`, true);
-      }
-    });
-  </script>
+      })
+      .catch(function() {
+        showMessage('Submission failed. Please check your connection and try again.', 'error');
+        if (btn) { btn.disabled = false; btn.textContent = 'Submit review'; }
+      });
+  });
+
+  function showMessage(msg, type) {
+    var el = document.getElementById('response-message');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = type;
+    el.style.display = 'block';
+  }
+</script>
 </body>
 </html>
