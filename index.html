@@ -1,345 +1,454 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2026 Championships Women's Seeding Review</title>
   <style>
-    :root {
-      --bg: #f7f6f2;
-      --card: #ffffff;
-      --text: #222;
-      --muted: #666;
-      --border: #d8d5cf;
-      --accent: #0b6b70;
-      --accent-dark: #084e52;
-      --accent-soft: #e5f2f2;
-      --radius: 14px;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f6f9;
+      color: #222;
+      padding: 24px 16px 60px;
     }
-    * { box-sizing: border-box; }
-    body { margin: 0; font-family: Arial, sans-serif; color: var(--text); background: var(--bg); line-height: 1.5; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 24px 16px 56px; }
-    .header { margin-bottom: 24px; }
-    .eyebrow { color: var(--accent); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
-    h1 { margin: 0 0 10px; font-size: 32px; line-height: 1.15; }
-    .intro { max-width: 72ch; color: var(--muted); margin-bottom: 0; }
-    .layout { display: grid; grid-template-columns: 360px 1fr; gap: 24px; }
-    .panel { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-    h2 { margin: 0 0 14px; font-size: 20px; }
-    .ranking-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-    .ranking-item { border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; background: #fcfcfa; display: grid; grid-template-columns: 28px 1fr auto; gap: 10px; align-items: start; }
-    .ranking-item strong { display: block; }
-    .ranking-item small { color: var(--muted); }
-    .score { font-variant-numeric: tabular-nums; }
-    .section { padding-bottom: 24px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
-    .section:last-of-type { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
-    .field { margin-bottom: 18px; }
-    label, .legend { display: block; font-weight: 700; margin-bottom: 8px; }
-    .help { margin-top: 6px; color: var(--muted); font-size: 14px; }
-    input[type="text"], input[type="email"], textarea, select { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; font: inherit; background: #fff; }
-    textarea { min-height: 120px; resize: vertical; }
-    .choice-list, .checkbox-grid { display: grid; gap: 10px; }
-    .checkbox-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .choice, .check { display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--border); border-radius: 12px; padding: 12px; background: #fcfcfa; }
-    .hidden { display: none; }
-    .actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 4px; }
-    button { border: 0; border-radius: 999px; padding: 12px 18px; font: inherit; font-weight: 700; cursor: pointer; min-height: 44px; }
-    .primary { background: var(--accent); color: white; }
-    .primary:hover { background: var(--accent-dark); }
-    .secondary { background: var(--accent-soft); color: var(--accent-dark); }
-    .status { margin-top: 16px; border-radius: 12px; padding: 14px; border: 1px solid var(--border); background: #faf9f7; display: none; white-space: pre-wrap; }
-    .status.show { display: block; }
-    .code-note { margin-top: 22px; font-size: 14px; color: var(--muted); }
-    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } .checkbox-grid { grid-template-columns: 1fr; } }
+
+    .container { max-width: 980px; margin: 0 auto; }
+
+    .page-header {
+      margin-bottom: 16px;
+    }
+
+    .page-header p.label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #4A90D9;
+      margin-bottom: 6px;
+    }
+
+    .page-header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1F3864;
+      margin-bottom: 10px;
+    }
+
+    .page-header p.desc {
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 700px) {
+      .layout { flex-direction: column; }
+      .rankings-panel { position: static !important; }
+    }
+
+    /* Rankings panel */
+    .rankings-panel {
+      width: 340px;
+      flex-shrink: 0;
+      background: #fff;
+      border: 1px solid #dde3ec;
+      border-radius: 8px;
+      padding: 20px;
+      position: sticky;
+      top: 24px;
+    }
+
+    .rankings-panel h2 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #1F3864;
+      margin-bottom: 12px;
+    }
+
+    .rankings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .rankings-table th {
+      background: #1F3864;
+      color: #fff;
+      padding: 7px 8px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    .rankings-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #eef0f4;
+    }
+
+    .rankings-table tr:nth-child(even) td { background: #f7f9fc; }
+    .rankings-table tr:hover td { background: #eef3fb; }
+
+    .seed-num { font-weight: 700; color: #1F3864; }
+
+    /* Form panel */
+    .form-panel { flex: 1; }
+
+    .form-section {
+      background: #fff;
+      border: 1px solid #dde3ec;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1F3864;
+      margin-bottom: 18px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #e8ecf2;
+    }
+
+    .field-group { margin-bottom: 20px; }
+    .field-group:last-child { margin-bottom: 0; }
+
+    label.field-label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.92rem;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    .required-star { color: #c0392b; margin-left: 3px; }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ccd3de;
+      border-radius: 5px;
+      font-size: 0.92rem;
+      color: #222;
+      background: #fff;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #4A90D9;
+      box-shadow: 0 0 0 3px rgba(74,144,217,0.15);
+    }
+
+    textarea { resize: vertical; min-height: 100px; }
+
+    .field-hint { font-size: 0.82rem; color: #666; margin-top: 5px; }
+
+    /* Radio options */
+    .options-list { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
+
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid #dde3ec;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .option-item:hover { background: #f0f5fc; border-color: #4A90D9; }
+
+    .option-item input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      margin-top: 2px;
+      accent-color: #1F3864;
+      flex-shrink: 0;
+    }
+
+    .option-item .option-text strong {
+      display: block;
+      font-size: 0.92rem;
+      color: #222;
+    }
+
+    .option-item .option-text span {
+      font-size: 0.82rem;
+      color: #666;
+    }
+
+    /* Checkbox grid */
+    .checkbox-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 540px) { .checkbox-grid { grid-template-columns: 1fr; } }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid #dde3ec;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: background 0.15s;
+    }
+
+    .checkbox-item:hover { background: #f0f5fc; }
+
+    .checkbox-item input[type="checkbox"] {
+      width: 15px;
+      height: 15px;
+      accent-color: #1F3864;
+      flex-shrink: 0;
+    }
+
+    /* Conditional section */
+    #feedback-section { display: none; }
+
+    /* Submit */
+    .submit-wrap { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+    button[type="submit"] {
+      background: #1F3864;
+      color: #fff;
+      border: none;
+      padding: 13px 40px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button[type="submit"]:hover { background: #2d4f8a; }
+    button[type="submit"]:disabled { background: #8a9bb5; cursor: not-allowed; }
+
+    #response-message {
+      display: none;
+      margin-top: 16px;
+      padding: 16px 20px;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    #response-message.success {
+      background: #d4edda;
+      border: 1px solid #b7dfc1;
+      color: #1a5c2a;
+    }
+
+    #response-message.error {
+      background: #f8d7da;
+      border: 1px solid #f1aeb5;
+      color: #842029;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="header">
-      <div class="eyebrow">Official team response form</div>
-      <h1>2026 Championships Women’s Seeding Review</h1>
-      <p class="intro">Please submit one official response per qualified team. Teams that approve the posted rankings can finish quickly. Teams with notes or objections will see a few extra questions so feedback is easier to review in the spreadsheet.</p>
-    </div>
+<div class="container">
 
-    <div class="layout">
-      <aside class="panel">
-        <h2>Posted rankings</h2><table class="rankings-table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Team</th>
-      <th>Reg. Finish</th>
-      <th>Power Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>1</td><td>Carleton College</td><td>NC1</td><td>2607.1</td></tr>
-    <tr><td>2</td><td>British Columbia</td><td>NW1</td><td>2490.0</td></tr>
-    <tr><td>3</td><td>California-Santa Cruz</td><td>SW1</td><td>2363.5</td></tr>
-    <tr><td>4</td><td>Stanford</td><td>SW2</td><td>2329.2</td></tr>
-    <tr><td>5</td><td>Washington</td><td>NW2</td><td>2226.1</td></tr>
-    <tr><td>6</td><td>Tufts</td><td>NE1</td><td>2195.2</td></tr>
-    <tr><td>7</td><td>North Carolina</td><td>AC1</td><td>2192.8</td></tr>
-    <tr><td>8</td><td>Colorado</td><td>SC1</td><td>2072.1</td></tr>
-    <tr><td>9</td><td>Pennsylvania</td><td>OV1</td><td>2006.9</td></tr>
-    <tr><td>10</td><td>Oregon</td><td>NW3</td><td>1979.8</td></tr>
-    <tr><td>11</td><td>Western Washington</td><td>NW4</td><td>1952.0</td></tr>
-    <tr><td>12</td><td>UCLA</td><td>SW3</td><td>1921.5</td></tr>
-    <tr><td>13</td><td>California-San Diego</td><td>SW5</td><td>1917.5</td></tr>
-    <tr><td>14</td><td>Cal Poly-SLO</td><td>SW4</td><td>1878.2</td></tr>
-    <tr><td>15</td><td>Victoria</td><td>NW5</td><td>1869.0</td></tr>
-    <tr><td>16</td><td>Vermont</td><td>NE2</td><td>1790.2</td></tr>
-    <tr><td>17</td><td>Georgia</td><td>SE1</td><td>1733.1</td></tr>
-    <tr><td>18</td><td>Michigan</td><td>GL1</td><td>1636.0</td></tr>
-    <tr><td>19</td><td>Toronto</td><td>ME1</td><td>1581.8</td></tr>
-    <tr><td>20</td><td>Vermont B</td><td>NE3</td><td>1437.1</td></tr>
-  </tbody>
-</table>
-        <ol class="ranking-list" id="rankingList"></ol>
-      </aside>
-
-      <main class="panel">
-        <form id="reviewForm">
-          <section class="section">
-            <h2>Team information</h2>
-            <div class="field">
-              <label for="team_name">Team name</label>
-              <select id="team_name" name="team_name" required>
-                <option value="">Select your team</option>
-        <option value="Carleton College">Carleton College</option>
-  <option value="British Columbia">British Columbia</option>
-  <option value="California-Santa Cruz">California-Santa Cruz</option>
-  <option value="Stanford">Stanford</option>
-  <option value="Washington">Washington</option>
-  <option value="Tufts">Tufts</option>
-  <option value="North Carolina">North Carolina</option>
-  <option value="Colorado">Colorado</option>
-  <option value="Pennsylvania">Pennsylvania</option>
-  <option value="Oregon">Oregon</option>
-  <option value="Western Washington">Western Washington</option>
-  <option value="UCLA">UCLA</option>
-  <option value="California-San Diego">California-San Diego</option>
-  <option value="Cal Poly-SLO">Cal Poly-SLO</option>
-  <option value="Victoria">Victoria</option>
-  <option value="Vermont">Vermont</option>
-  <option value="Georgia">Georgia</option>
-  <option value="Michigan">Michigan</option>
-  <option value="Toronto">Toronto</option>
-  <option value="Vermont B">Vermont B</option>            
-              </select>
-            </div>
-            <div class="field">
-              <label for="respondent_name">Name of person(s) completing the form</label>
-              <input id="respondent_name" name="respondent_name" type="text" required>
-            </div>
-            <div class="field">
-              <label for="email">Email address</label>
-              <input id="email" name="email" type="email" required>
-            </div>
-          </section>
-
-          <section class="section">
-            <h2>Approval</h2>
-            <div class="field">
-              <div class="legend">Do you approve the posted rankings as submitted?</div>
-              <div class="choice-list">
-                <label class="choice"><input type="radio" name="approval_status" value="Yes" required> <span><strong>Yes</strong><br><span class="help">No changes requested.</span></span></label>
-                <label class="choice"><input type="radio" name="approval_status" value="Yes, with minor notes" required> <span><strong>Yes, with minor notes</strong><br><span class="help">Mostly approve, but want to flag a few adjustments.</span></span></label>
-                <label class="choice"><input type="radio" name="approval_status" value="No" required> <span><strong>No</strong><br><span class="help">You recommend changes to the posted rankings.</span></span></label>
-              </div>
-            </div>
-          </section>
-
-          <section class="section hidden" id="detailsSection">
-            <h2>Detailed feedback</h2>
-            <div class="field">
-              <div class="legend">Which teams are seeded too high?</div>
-              <div class="checkbox-grid" id="tooHighGrid"></div>
-              <div class="help">Select up to 5 teams.</div>
-            </div>
-            <div class="field">
-              <div class="legend">Which teams are seeded too low?</div>
-              <div class="checkbox-grid" id="tooLowGrid"></div>
-              <div class="help">Select up to 5 teams.</div>
-            </div>
-            <div class="field">
-              <label for="recommended_changes">What specific changes do you recommend?</label>
-              <textarea id="recommended_changes" name="recommended_changes"></textarea>
-            </div>
-            <div class="field">
-              <label for="justification">Please provide qualitative or quantitative justification for your feedback.</label>
-              <textarea id="justification" name="justification"></textarea>
-            </div>
-          </section>
-
-          <section class="section">
-            <h2>Final comments</h2>
-            <div class="field">
-              <label for="additional_comments">Anything else you would like to share?</label>
-              <textarea id="additional_comments" name="additional_comments"></textarea>
-            </div>
-          </section>
-
-          <div class="actions">
-            <button class="primary" type="submit">Submit review</button>
-            <button class="secondary" type="button" id="previewButton">Preview payload</button>
-          </div>
-
-          <div id="status" class="status"></div>
-          </form>
-      </main>
-    </div>
+  <div class="page-header">
+    <p class="label">Official Team Response Form</p>
+    <h1>2026 Championships Women's Seeding Review</h1>
+    <p class="desc">Please submit one official response per qualified team. Teams that approve the posted rankings can finish quickly. Teams with notes or objections will see a few extra questions so feedback is easier to review in the spreadsheet.</p>
   </div>
 
-  <script>
-    const RANKINGS_DATA = [
-      { rank: 1, team: 'Carleton College', region: 'NC1', pr: '2607.1' },
-      { rank: 2, team: 'British Columbia', region: 'NW1', pr: '2490.0' },
-      { rank: 3, team: 'California-Santa Cruz', region: 'SW1', pr: '2363.5' },
-      { rank: 4, team: 'Stanford', region: 'SW2', pr: '2329.2' },
-      { rank: 5, team: 'Washington', region: 'NW2', pr: '2226.1' },
-      { rank: 6, team: 'Tufts', region: 'NE1', pr: '2195.2' },
-      { rank: 7, team: 'North Carolina', region: 'AC1', pr: '2192.8' },
-      { rank: 8, team: 'Colorado', region: 'SC1', pr: '2072.1' },
-      { rank: 9, team: 'Pennsylvania', region: 'OV1', pr: '2006.9' },
-      { rank: 10, team: 'Oregon', region: 'NW3', pr: '1979.8' },
-      { rank: 11, team: 'Western Washington', region: 'NW4', pr: '1952.0' },
-      { rank: 12, team: 'UCLA', region: 'SW3', pr: '1921.5' },
-      { rank: 13, team: 'California-San Diego', region: 'SW5', pr: '1917.5' },
-      { rank: 14, team: 'Cal Poly-SLO', region: 'SW4', pr: '1878.2' },
-      { rank: 15, team: 'Victoria', region: 'NW5', pr: '1869.0' },
-      { rank: 16, team: 'Vermont', region: 'NE2', pr: '1790.2' },
-      { rank: 17, team: 'Georgia', region: 'SE1', pr: '1733.1' },
-      { rank: 18, team: 'Michigan', region: 'GL1', pr: '1636.0' },
-      { rank: 19, team: 'Toronto', region: 'ME1', pr: '1581.8' },
-      { rank: 20, team: 'Vermont B', region: 'NE3', pr: '1437.1' }
-    ];
+  <div class="layout">
 
-    const APPS_SCRIPT_URL = https://script.google.com/macros/s/AKfycbwVoO0cKLaacCsv6FvDT2tSBukSmXkerWUwtK5cVyGmGONPmKGCjiUvUZAMQ332guzfcA/exec;
-    const form = document.getElementById('reviewForm');
-    const detailsSection = document.getElementById('detailsSection');
-    const recommendedChanges = document.getElementById('recommended_changes');
-    const justification = document.getElementById('justification');
-    const statusBox = document.getElementById('status');
+    <!-- Left: Rankings -->
+    <div class="rankings-panel">
+      <h2>Posted rankings</h2>
+      <table class="rankings-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>Reg.</th>
+            <th>PR</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="seed-num">1</td><td>Carleton College</td><td>NC1</td><td>2607.1</td></tr>
+          <tr><td class="seed-num">2</td><td>British Columbia</td><td>NW1</td><td>2490.0</td></tr>
+          <tr><td class="seed-num">3</td><td>California-Santa Cruz</td><td>SW1</td><td>2363.5</td></tr>
+          <tr><td class="seed-num">4</td><td>Stanford</td><td>SW2</td><td>2329.2</td></tr>
+          <tr><td class="seed-num">5</td><td>Washington</td><td>NW2</td><td>2226.1</td></tr>
+          <tr><td class="seed-num">6</td><td>Tufts</td><td>NE1</td><td>2195.2</td></tr>
+          <tr><td class="seed-num">7</td><td>North Carolina</td><td>AC1</td><td>2192.8</td></tr>
+          <tr><td class="seed-num">8</td><td>Colorado</td><td>SC1</td><td>2072.1</td></tr>
+          <tr><td class="seed-num">9</td><td>Pennsylvania</td><td>OV1</td><td>2006.9</td></tr>
+          <tr><td class="seed-num">10</td><td>Oregon</td><td>NW3</td><td>1979.8</td></tr>
+          <tr><td class="seed-num">11</td><td>Western Washington</td><td>NW4</td><td>1952.0</td></tr>
+          <tr><td class="seed-num">12</td><td>UCLA</td><td>SW3</td><td>1921.5</td></tr>
+          <tr><td class="seed-num">13</td><td>California-San Diego</td><td>SW5</td><td>1917.5</td></tr>
+          <tr><td class="seed-num">14</td><td>Cal Poly-SLO</td><td>SW4</td><td>1878.2</td></tr>
+          <tr><td class="seed-num">15</td><td>Victoria</td><td>NW5</td><td>1869.0</td></tr>
+          <tr><td class="seed-num">16</td><td>Vermont</td><td>NE2</td><td>1790.2</td></tr>
+          <tr><td class="seed-num">17</td><td>Georgia</td><td>SE1</td><td>1733.1</td></tr>
+          <tr><td class="seed-num">18</td><td>Michigan</td><td>GL1</td><td>1636.0</td></tr>
+          <tr><td class="seed-num">19</td><td>Toronto</td><td>ME1</td><td>1581.8</td></tr>
+          <tr><td class="seed-num">20</td><td>Vermont B</td><td>NE3</td><td>1437.1</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-    function teamNames() {
-      return RANKINGS_DATA.map(item => item.team);
-    }
+    <!-- Right: Form -->
+    <div class="form-panel">
+      <form id="seeding-form" novalidate>
 
-    function renderRankings() {
-      const rankingList = document.getElementById('rankingList');
-      rankingList.innerHTML = RANKINGS_DATA.map(item => `
-        <li class="ranking-item">
-          <span>${item.rank}</span>
-          <div><strong>${item.team}</strong><small>${item.region}</small></div>
-          <span class="score">${item.pr}</span>
-        </li>
-      `).join('');
-    }
+        <!-- Team Identity -->
+        <div class="form-section">
+          <div class="section-title">Team information</div>
 
-    function renderTeamDropdown() {
-      const select = document.getElementById('team_name');
-      const options = teamNames().map(team => `<option>${team}</option>`).join('');
-      select.insertAdjacentHTML('beforeend', options);
-    }
+          <div class="field-group">
+            abel class="field-label" for="teamName">Team name <span class="required-star">*</span></label>
+            <select id="teamName" name="teamName" required>
+              <option value="">— Select your team —</option>
+              <option value="Carleton College">Carleton College</option>
+              <option value="British Columbia">British Columbia</option>
+              <option value="California-Santa Cruz">California-Santa Cruz</option>
+              <option value="Stanford">Stanford</option>
+              <option value="Washington">Washington</option>
+              <option value="Tufts">Tufts</option>
+              <option value="North Carolina">North Carolina</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Pennsylvania">Pennsylvania</option>
+              <option value="Oregon">Oregon</option>
+              <option value="Western Washington">Western Washington</option>
+              <option value="UCLA">UCLA</option>
+              <option value="California-San Diego">California-San Diego</option>
+              <option value="Cal Poly-SLO">Cal Poly-SLO</option>
+              <option value="Victoria">Victoria</option>
+              <option value="Vermont">Vermont</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Michigan">Michigan</option>
+              <option value="Toronto">Toronto</option>
+              <option value="Vermont B">Vermont B</option>
+            </select>
+          </div>
 
-    function renderCheckboxes(targetId, fieldName) {
-      const container = document.getElementById(targetId);
-      container.innerHTML = teamNames().map(team => `
-        <label class="check">
-          <input type="checkbox" name="${fieldName}" value="${team}">
-          <span>${team}</span>
-        </label>
-      `).join('');
-    }
+          <div class="field-group">
+            abel class="field-label" for="respondent">Name of person(s) completing the form <span class="required-star">*</span></label>
+            <input type="text" id="respondent" name="respondent" placeholder="First and last name" required />
+          </div>
 
-    renderRankings();
-    renderTeamDropdown();
-    renderCheckboxes('tooHighGrid', 'too_high');
-    renderCheckboxes('tooLowGrid', 'too_low');
+          <div class="field-group">
+            abel class="field-label" for="email">Email address <span class="required-star">*</span></label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" required />
+          </div>
+        </div>
 
-    function updateDetailsVisibility() {
-      const approval = form.querySelector('input[name="approval_status"]:checked')?.value;
-      const show = approval === 'Yes, with minor notes' || approval === 'No';
-      detailsSection.classList.toggle('hidden', !show);
-      recommendedChanges.required = show;
-      justification.required = show;
-    }
+        <!-- Approval -->
+        <div class="form-section">
+          <div class="section-title">Approval</div>
+          <div class="field-group">
+            abel class="field-label">Do you approve the posted rankings as submitted? <span class="required-star">*</span></label>
+            <div class="options-list">
+              abel class="option-item">
+                <input type="radio" name="approval" value="Yes" required />
+                <div class="option-text">
+                  <strong>Yes</strong>
+                  <span>No changes requested.</span>
+                </div>
+              </label>
+              abel class="option-item">
+                <input type="radio" name="approval" value="Yes, with minor notes" />
+                <div class="option-text">
+                  <strong>Yes, with minor notes</strong>
+                  <span>Mostly approve, but want to flag a few adjustments.</span>
+                </div>
+              </label>
+              abel class="option-item">
+                <input type="radio" name="approval" value="No" />
+                <div class="option-text">
+                  <strong>No</strong>
+                  <span>You recommend changes to the posted rankings.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
 
-    function limitChecks(fieldName, limit) {
-      const checked = [...document.querySelectorAll(`input[name="${fieldName}"]:checked`)];
-      if (checked.length > limit) {
-        checked[checked.length - 1].checked = false;
-        setStatus(`Please select no more than ${limit} teams for ${fieldName.replace('_', ' ')}.`, true);
-      }
-    }
+        <!-- Conditional Feedback -->
+        <div class="form-section" id="feedback-section">
+          <div class="section-title">Ranking feedback</div>
 
-    form.addEventListener('change', (event) => {
-      if (event.target.name === 'approval_status') updateDetailsVisibility();
-      if (event.target.name === 'too_high') limitChecks('too_high', 5);
-      if (event.target.name === 'too_low') limitChecks('too_low', 5);
-    });
+          <div class="field-group">
+            abel class="field-label">Which teams are seeded too high?</label>
+            <p class="field-hint">Select all that apply.</p>
+            <div class="checkbox-grid">
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Carleton College" /> Carleton College</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="British Columbia" /> British Columbia</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="California-Santa Cruz" /> California-Santa Cruz</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Stanford" /> Stanford</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Washington" /> Washington</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Tufts" /> Tufts</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="North Carolina" /> North Carolina</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Colorado" /> Colorado</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Pennsylvania" /> Pennsylvania</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Oregon" /> Oregon</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Western Washington" /> Western Washington</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="UCLA" /> UCLA</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="California-San Diego" /> California-San Diego</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Cal Poly-SLO" /> Cal Poly-SLO</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Victoria" /> Victoria</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Vermont" /> Vermont</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Georgia" /> Georgia</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Michigan" /> Michigan</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Toronto" /> Toronto</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooHigh" value="Vermont B" /> Vermont B</label>
+            </div>
+          </div>
 
-    function getValues(name) {
-      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
-    }
+          <div class="field-group">
+            abel class="field-label">Which teams are seeded too low?</label>
+            <p class="field-hint">Select all that apply.</p>
+            <div class="checkbox-grid">
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Carleton College" /> Carleton College</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="British Columbia" /> British Columbia</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="California-Santa Cruz" /> California-Santa Cruz</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Stanford" /> Stanford</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Washington" /> Washington</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Tufts" /> Tufts</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="North Carolina" /> North Carolina</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Colorado" /> Colorado</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Pennsylvania" /> Pennsylvania</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Oregon" /> Oregon</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Western Washington" /> Western Washington</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="UCLA" /> UCLA</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="California-San Diego" /> California-San Diego</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Cal Poly-SLO" /> Cal Poly-SLO</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Victoria" /> Victoria</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Vermont" /> Vermont</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Georgia" /> Georgia</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Michigan" /> Michigan</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Toronto" /> Toronto</label>
+              abel class="checkbox-item"><input type="checkbox" name="tooLow" value="Vermont B" /> Vermont B</label>
+            </div>
+          </div>
 
-    function buildPayload() {
-      const data = new FormData(form);
-      return {
-        submitted_at: new Date().toISOString(),
-        team_name: data.get('team_name') || '',
-        respondent_name: data.get('respondent_name') || '',
-        email: data.get('email') || '',
-        approval_status: data.get('approval_status') || '',
-        too_high: getValues('too_high').join(', '),
-        too_low: getValues('too_low').join(', '),
-        recommended_changes: data.get('recommended_changes') || '',
-        justification: data.get('justification') || '',
-        additional_comments: data.get('additional_comments') || ''
-      };
-    }
-
-    function setStatus(message, isError = false) {
-      statusBox.textContent = message;
-      statusBox.classList.add('show');
-      statusBox.style.color = isError ? '#a12c7b' : '#222';
-    }
-
-    document.getElementById('previewButton').addEventListener('click', () => {
-      setStatus(JSON.stringify(buildPayload(), null, 2), false);
-    });
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      updateDetailsVisibility();
-      if (!form.reportValidity()) return;
-
-      if (APPS_SCRIPT_URL === 'PASTE_YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
-        setStatus('Add your Google Apps Script URL in the code before using live submission.', true);
-        return;
-      }
-
-      try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(buildPayload())
-        });
-        const result = await response.json();
-        if (result.status === 'success') {
-          form.reset();
-          detailsSection.classList.add('hidden');
-          recommendedChanges.required = false;
-          justification.required = false;
-          setStatus('Thanks — your response was submitted successfully.');
-        } else {
-          setStatus(result.message || 'Submission failed.', true);
-        }
-      } catch (error) {
-        setStatus(`Submission error: ${error.message}`, true);
-      }
-    });
-  </script>
-</body>
-</html>
+          <div class="field-group">
